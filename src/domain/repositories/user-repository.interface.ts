@@ -1,7 +1,7 @@
 import { UserModel } from '../models/user.model';
 
 export interface IUserRepository {
-  insert(userModel: UserModel): Promise<UserModel>;
+  create(userModel: UserModel): Promise<UserModel>;
 
   findAll(): Promise<UserModel[]>;
 

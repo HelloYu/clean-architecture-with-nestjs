@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongoDBEnvironmentConfig } from './mongodb-environment.config';
+import { AppConfig } from './app.config';
 
 @Module({
   imports: [
@@ -10,7 +11,7 @@ import { MongoDBEnvironmentConfig } from './mongodb-environment.config';
         process.env.NODE_ENV === 'local' || process.env.NODE_ENV === 'test'
       ),
       isGlobal: true,
-      load: [MongoDBEnvironmentConfig],
+      load: [AppConfig, MongoDBEnvironmentConfig],
     }),
   ],
 })

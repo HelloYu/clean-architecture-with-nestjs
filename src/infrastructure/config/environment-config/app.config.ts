@@ -10,13 +10,13 @@ export class AppVariables {
   NODE_ENV: Environment;
 }
 
-export const AppConfig =  registerAs('app', (): IAppConfig => {
-
+export const AppConfig = registerAs('app', (): IAppConfig => {
   // Executes our custom function
-  environmentValidationUtil(process.env,AppVariables);
+  environmentValidationUtil(process.env, AppVariables);
 
   // If all is valid, this will return successfully
   return {
     NODE_ENV: process.env.NODE_ENV,
+    PORT: parseInt(process.env.PORT) || 3000,
   };
 });
