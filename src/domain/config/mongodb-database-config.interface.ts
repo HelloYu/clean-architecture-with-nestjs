@@ -1,3 +1,3 @@
 export interface IMongoDBConfig {
-  url: string;
+  URI: string;
 }
