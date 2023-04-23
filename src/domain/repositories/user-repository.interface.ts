@@ -5,5 +5,7 @@ export interface IUserRepository {
 
   findAll(): Promise<UserModel[]>;
 
+  findByUsername(username: string): Promise<UserModel>;
+
   findById(id: String): Promise<UserModel>;
 }

@@ -15,6 +15,12 @@ export class UserRepository implements IUserRepository {
     private readonly mapper: UserMapper,
   ) {}
 
+  async findByUsername(username: string): Promise<UserModel> {
+    const found = await this.userEntity.findOne({ username: username });
+
+    return this.mapper.fromEntityToModel(found);
+  }
+
   async create(userModel: UserModel): Promise<UserModel> {
     const created = await this.userEntity.create(userModel);
 

@@ -1,4 +1,4 @@
-import { Controller, Inject, Get, Post, Body } from '@nestjs/common';
+import { Controller, Inject, Get, Post, Body, UseGuards } from '@nestjs/common';
 import { UserMapper } from 'src/infrastructure/mappers/user.mapper';
 import { UsecaseProxy } from 'src/infrastructure/usecases-proxy/usecase-proxy';
 import { UserUsecasesProxyModule } from 'src/infrastructure/usecases-proxy/user-usecases-proxy.module';
@@ -6,6 +6,7 @@ import { GetUsersUsecase } from 'src/usecases/user/get-users.usecase';
 import { UserPresenter } from './user.presenter';
 import { CreateUsersUsecase } from 'src/usecases/user/create-user.usecase';
 import { UserRequestDto } from './user-request.dto';
+import { JwtAuthGuard } from 'src/infrastructure/auth/guards/jwt-auth.guard';
 
 @Controller('users')
 export class UserController {
@@ -18,6 +19,7 @@ export class UserController {
     private readonly mapper: UserMapper,
   ) {}
 
+  @UseGuards(JwtAuthGuard)
   @Post()
   async create(@Body() userRequestDto: UserRequestDto): Promise<UserPresenter> {
     const user = this.mapper.fromDtoToModel(userRequestDto);
