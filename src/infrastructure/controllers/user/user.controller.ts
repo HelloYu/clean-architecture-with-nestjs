@@ -7,6 +7,7 @@ import { UserPresenter } from './user.presenter';
 import { CreateUsersUsecase } from 'src/usecases/user/create-user.usecase';
 import { UserRequestDto } from './user-request.dto';
 import { JwtAuthGuard } from 'src/infrastructure/auth/guards/jwt-auth.guard';
+import { LoggerService } from 'src/infrastructure/logger/logger.service';
 
 @Controller('users')
 export class UserController {
@@ -17,6 +18,8 @@ export class UserController {
     private readonly createUserUsecaseProxy: UsecaseProxy<CreateUsersUsecase>,
     @Inject(UserMapper)
     private readonly mapper: UserMapper,
+    @Inject(LoggerService)
+    private readonly logger: LoggerService,
   ) {}
 
   @UseGuards(JwtAuthGuard)
@@ -34,6 +37,8 @@ export class UserController {
   @Get()
   async getUsers(): Promise<UserPresenter[]> {
     const users = await this.getUsersUsecaseProxy.getInstance().execute();
+
+    this.logger.log('User Controller', 'get users');
 
     return users.map((item) => this.mapper.fromModelToPresenter(item));
   }
